@@ -1,0 +1,14 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: plouf_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
