@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter # type: ignore
 from app.Mongo import (
     get_mongo_health,
     get_mongo_uptime,

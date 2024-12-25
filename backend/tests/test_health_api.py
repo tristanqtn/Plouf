@@ -1,7 +1,7 @@
-import pytest
-from fastapi.testclient import TestClient
-from app.routes.health.api import api_health_router  # Adjust the import based on your app structure
-from fastapi import FastAPI
+import pytest # type: ignore
+from fastapi.testclient import TestClient # type: ignore
+from app.routes.health.api import api_health_router  
+from fastapi import FastAPI # type: ignore
 
 # Create a test app and include the router
 app = FastAPI()

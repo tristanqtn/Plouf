@@ -1,5 +1,5 @@
 import time
-from fastapi import APIRouter
+from fastapi import APIRouter # type: ignore
 
 start_time = time.time()
 

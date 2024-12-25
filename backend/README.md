@@ -12,7 +12,7 @@ The backend structure is organized as follows:
   - **`Mongo.py`**: Handles interactions with the MongoDB database (CRUD operations).
   - **`Pools.py`**: Contains the models for pools and pool logs, including validation logic.
   - **`routes/`**: Contains FastAPI routers for handling API endpoints.
-    - **`heallth/`**: Contains the health check endpoint.
+    - **`health/`**: Contains the health check endpoint.
     - **`pools/`**: Contains the CRUD endpoints for pools and pool logs.
 
 - **`tests/`**: Unit and integration tests for the application.
