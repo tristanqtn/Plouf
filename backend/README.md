@@ -11,7 +11,9 @@ The backend structure is organized as follows:
   - **`main.py`**: Entry point for the application, starts the server and handles routing.
   - **`Mongo.py`**: Handles interactions with the MongoDB database (CRUD operations).
   - **`Pools.py`**: Contains the models for pools and pool logs, including validation logic.
-  - **`Routers/`**: Contains FastAPI routers for handling API endpoints.
+  - **`routes/`**: Contains FastAPI routers for handling API endpoints.
+    - **`heallth/`**: Contains the health check endpoint.
+    - **`pools/`**: Contains the CRUD endpoints for pools and pool logs.
 
 - **`tests/`**: Unit and integration tests for the application.
 
@@ -86,6 +88,12 @@ This will run all the unit and integration tests in the `tests/` directory.
   ```
 
 - To run your application:
+
   ```bash
   poetry run python -m app.main
+  ```
+
+- To run fastAPI in development mode:
+  ```bash
+  poetry run uvicorn app.main:app --reload
   ```

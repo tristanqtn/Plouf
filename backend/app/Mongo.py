@@ -11,7 +11,8 @@ from bson.objectid import ObjectId
 
 from app.Pools import Pool, PoolLog
 
-load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
 
 MONGO_ADDRESS = os.getenv("MONGO_ADDRESS")
 MONGO_USER = os.getenv("MONGO_USER")
@@ -23,7 +24,7 @@ mongo_uri = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_ADDRESS}"
 
 if not MONGO_DATABASE or not MONGO_COLLECTION:
     raise ValueError(
-        "Environment variables MONGO_DB and MONGO_COLLECTION must be set and non-empty strings."
+        "Environment variables MONGO_DATABASE and MONGO_COLLECTION must be set and non-empty strings."
     )
 
 # MongoDB connection setup
@@ -187,3 +188,119 @@ def delete_pool_log_by_id(pool_id: str, log_id: str) -> bool:
         {"_id": ObjectId(pool_id)}, {"$pull": {"logbook": {"id": log_id}}}
     )
     return result.modified_count > 0
+
+
+def get_mongo_info():
+    """
+    Retrieve MongoDB server version and build info.
+    """
+    try:
+        info = client.server_info()
+        return {
+            "status": "ok",
+            "version": info.get("version"),
+            "build_environment": info.get("buildEnvironment", {}),
+            "storage_engines": info.get("storageEngines", []),
+            "javascript_engine": info.get("javascriptEngine"),
+        }
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to fetch server info: {str(e)}"}
+
+
+def get_mongo_uptime():
+    """
+    Get MongoDB server uptime in seconds.
+    """
+    try:
+        server_status = client.admin.command("serverStatus")
+        uptime_seconds = server_status.get("uptime", 0)
+        return {"status": "ok", "uptime_seconds": uptime_seconds}
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to fetch uptime: {str(e)}"}
+
+
+def get_mongo_health():
+    """
+    Check if the MongoDB connection is healthy.
+    """
+    try:
+        info = client.server_info()
+        if info.get("ok") == 1:
+            return {"status": "ok", "message": "MongoDB server is healthy."}
+        else:
+            return {
+                "status": "error",
+                "message": "MongoDB server returned a non-OK status.",
+            }
+    except Exception as e:
+        return {"status": "error", "message": f"Error connecting to MongoDB: {str(e)}"}
+
+
+def get_mongo_storage_stats():
+    """
+    Retrieve MongoDB storage statistics.
+    """
+    try:
+        server_status = client.admin.command("serverStatus")
+        storage_engine = server_status.get("storageEngine", {}).get("name", "unknown")
+        memory_info = server_status.get("mem", {})
+        return {
+            "status": "ok",
+            "storage_engine": storage_engine,
+            "memory": {
+                "resident_MB": memory_info.get("resident"),
+                "virtual_MB": memory_info.get("virtual"),
+                "mapped_MB": memory_info.get("mapped"),
+            },
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Failed to fetch storage stats: {str(e)}",
+        }
+
+
+def get_mongo_connection_stats():
+    """
+    Retrieve MongoDB connection statistics.
+    """
+    try:
+        server_status = client.admin.command("serverStatus")
+        connections = server_status.get("connections", {})
+        return {
+            "status": "ok",
+            "connections": {
+                "current": connections.get("current"),
+                "available": connections.get("available"),
+                "total_created": connections.get("totalCreated"),
+            },
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Failed to fetch connection stats: {str(e)}",
+        }
+
+
+def get_mongo_full_health():
+    """
+    Retrieve a comprehensive health report of MongoDB.
+    """
+    try:
+        health = get_mongo_health()
+        uptime = get_mongo_uptime()
+        storage = get_mongo_storage_stats()
+        connections = get_mongo_connection_stats()
+
+        return {
+            "overall_status": health["status"],
+            "health": health,
+            "uptime": uptime,
+            "storage_stats": storage,
+            "connection_stats": connections,
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Failed to fetch full health report: {str(e)}",
+        }
