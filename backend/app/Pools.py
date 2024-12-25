@@ -1,3 +1,5 @@
+# Description: Defines the data models and utility functions for the swimming pool application.
+
 from uuid import uuid4, UUID
 from typing import Optional, List
 from pydantic import BaseModel, Field

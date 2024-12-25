@@ -1,10 +1,12 @@
 from fastapi import FastAPI # type: ignore
 from app.routes.health.mongo import mongo_health_router
 from app.routes.health.api import api_health_router
+from app.routes.pool.router import pool_router
 
 app = FastAPI()
 
 # Include the router
+app.include_router(pool_router, prefix="/pool", tags=["Pool"])
 
 app.include_router(mongo_health_router, prefix="/health/mongo", tags=["Health"])
 app.include_router(api_health_router, prefix="/health/api", tags=["Health"])

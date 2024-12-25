@@ -1,3 +1,5 @@
+# Description : MongoDB health check API routes for the FastAPI application.
+
 from fastapi import APIRouter # type: ignore
 from app.Mongo import (
     get_mongo_health,
