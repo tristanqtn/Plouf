@@ -1,4 +1,4 @@
-from fastapi import FastAPI # type: ignore
+from fastapi import FastAPI  # type: ignore
 from app.routes.health.mongo import mongo_health_router
 from app.routes.health.api import api_health_router
 from app.routes.pool.router import pool_router
@@ -22,7 +22,7 @@ async def root():
 
 if __name__ == "__main__":
     import os
-    import uvicorn # type: ignore
+    import uvicorn  # type: ignore
     from dotenv import load_dotenv
 
     load_dotenv()

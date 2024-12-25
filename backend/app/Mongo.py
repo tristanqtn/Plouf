@@ -6,10 +6,10 @@ import uuid
 from typing import Dict, Any
 
 from dotenv import load_dotenv
-from pymongo import MongoClient # type: ignore
+from pymongo import MongoClient  # type: ignore
 from typing import List, Optional
-from bson.binary import Binary, UuidRepresentation # type: ignore
-from bson.objectid import ObjectId # type: ignore
+from bson.binary import Binary, UuidRepresentation  # type: ignore
+from bson.objectid import ObjectId  # type: ignore
 
 from app.Pools import Pool, PoolLog
 
@@ -33,7 +33,8 @@ if not MONGO_DATABASE or not MONGO_COLLECTION:
 client = MongoClient(mongo_uri, uuidRepresentation="standard")
 pools_collection = client[MONGO_DATABASE][MONGO_COLLECTION]
 
-# UTILS 
+# UTILS
+
 
 def parse_pool_data(mongo_data: Dict[str, Any]) -> Pool:
     # Convert MongoDB's _id (ObjectId) to UUID
@@ -70,7 +71,8 @@ def pool_to_dict(pool: Pool):
     return json.loads(pool.json())
 
 
-# MONGO OPERATIONS 
+# MONGO OPERATIONS
+
 
 def create_pool(pool: Pool):
     """
@@ -152,12 +154,13 @@ def delete_pool_logs(pool_id: str):
     return result.modified_count > 0
 
 
-def delete_all_pools():   
+def delete_all_pools():
     """
     Deletes all pools from the database.
     """
     result = pools_collection.delete_many({})
     return result.deleted_count
+
 
 def retrieve_pool_log_by_id(pool_id: str, log_id: str) -> Optional[dict]:
     """
@@ -191,7 +194,9 @@ def delete_pool_log_by_id(pool_id: str, log_id: str) -> bool:
     )
     return result.modified_count > 0
 
+
 # MONGO HEALTH CHECKS
+
 
 def get_mongo_info():
     """

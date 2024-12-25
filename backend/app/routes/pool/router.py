@@ -1,10 +1,19 @@
 # Description: Pool routes for supporting CRUD operations.
 
-from fastapi import APIRouter # type: ignore
+from fastapi import APIRouter  # type: ignore
 from app.Pools import Pool, PoolLog
-from app.Mongo import create_pool, read_all_pools, retrieve_pool, update_pool, delete_pool, delete_all_pools, retrieve_pool_log_by_id
+from app.Mongo import (
+    create_pool,
+    read_all_pools,
+    retrieve_pool,
+    update_pool,
+    delete_pool,
+    delete_all_pools,
+    retrieve_pool_log_by_id,
+)
 
 pool_router = APIRouter()
+
 
 @pool_router.post(
     "/new",
@@ -23,12 +32,16 @@ async def create_new_pool(pool_data: dict):
     - `message`: Additional information about the operation.
     """
     try:
-
         pool = Pool(**pool_data)
         pool_id = create_pool(pool)
-        return {"status": "ok", "id": pool_id, "message": f"Pool created with ID: {pool_id}"}
+        return {
+            "status": "ok",
+            "id": pool_id,
+            "message": f"Pool created with ID: {pool_id}",
+        }
     except Exception as e:
         return {"status": "error", "message": f"Failed to create pool: {str(e)}"}
+
 
 @pool_router.get(
     "/all",
@@ -47,7 +60,8 @@ async def get_all_pools():
         return {"status": "ok", "pools": pools}
     except Exception as e:
         return {"status": "error", "message": f"Failed to retrieve pools: {str(e)}"}
-    
+
+
 @pool_router.delete(
     "/all",
     summary="Delete all pools",
@@ -63,7 +77,10 @@ async def delete_all_pools_route():
     """
     try:
         deleted_count = delete_all_pools()
-        return {"status": "ok", "message": f"Deleted {deleted_count} pools successfully."}
+        return {
+            "status": "ok",
+            "message": f"Deleted {deleted_count} pools successfully.",
+        }
     except Exception as e:
         return {"status": "error", "message": f"Failed to delete pools: {str(e)}"}
 
@@ -88,7 +105,8 @@ async def get_pool_by_id(pool_id: str):
         return {"status": "ok", "pool": pool}
     except Exception as e:
         return {"status": "error", "message": f"Failed to retrieve pool: {str(e)}"}
-    
+
+
 @pool_router.put(
     "/{pool_id}",
     summary="Update a specific pool",
@@ -113,7 +131,8 @@ async def update_pool_by_id(pool_id: str, pool_data: dict):
         return {"status": "ok", "message": "Pool updated successfully."}
     except Exception as e:
         return {"status": "error", "message": f"Failed to update pool: {str(e)}"}
-    
+
+
 @pool_router.delete(
     "/{pool_id}",
     summary="Delete a specific pool",
@@ -137,7 +156,8 @@ async def delete_pool_by_id(pool_id: str):
         return {"status": "ok", "message": "Pool deleted successfully."}
     except Exception as e:
         return {"status": "error", "message": f"Failed to delete pool: {str(e)}"}
-    
+
+
 @pool_router.post(
     "/{pool_id}/log",
     summary="Log maintenance for a pool",
@@ -168,6 +188,7 @@ async def log_maintenance(pool_id: str, log_data: dict):
     except Exception as e:
         return {"status": "error", "message": f"Failed to log maintenance: {str(e)}"}
 
+
 @pool_router.get(
     "/{pool_id}/log/all",
     summary="Retrieve all maintenance logs",
@@ -190,7 +211,6 @@ async def get_all_pool_logs(pool_id: str):
         return {"status": "ok", "logs": pool.logbook}
     except Exception as e:
         return {"status": "error", "message": f"Failed to retrieve logs: {str(e)}"}
-    
 
 
 @pool_router.get(
@@ -216,4 +236,3 @@ async def get_pool_log_by_id(pool_id: str, log_id: str):
         return {"status": "ok", "log": log}
     except Exception as e:
         return {"status": "error", "message": f"Failed to retrieve log: {str(e)}"}
-    

@@ -1,7 +1,7 @@
 # Description: Health check API routes for the FastAPI application.
 
 import time
-from fastapi import APIRouter # type: ignore
+from fastapi import APIRouter  # type: ignore
 
 start_time = time.time()
 

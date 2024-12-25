@@ -1,6 +1,6 @@
-from fastapi.testclient import TestClient # type: ignore
-from app.routes.health.mongo import mongo_health_router 
-from fastapi import FastAPI # type: ignore
+from fastapi.testclient import TestClient  # type: ignore
+from app.routes.health.mongo import mongo_health_router
+from fastapi import FastAPI  # type: ignore
 
 # Create a test app and include the router
 app = FastAPI()
@@ -70,6 +70,7 @@ def test_mongo_connection_stats():
     assert "status" in data
     assert data["status"] == "ok"
     assert "connections" in data
+
 
 def test_mongo_full_health():
     """

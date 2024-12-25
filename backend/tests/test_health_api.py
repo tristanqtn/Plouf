@@ -1,13 +1,14 @@
-import pytest # type: ignore
-from fastapi.testclient import TestClient # type: ignore
-from app.routes.health.api import api_health_router  
-from fastapi import FastAPI # type: ignore
+import pytest  # type: ignore
+from fastapi.testclient import TestClient  # type: ignore
+from app.routes.health.api import api_health_router
+from fastapi import FastAPI  # type: ignore
 
 # Create a test app and include the router
 app = FastAPI()
 app.include_router(api_health_router)
 
 client = TestClient(app)
+
 
 def test_api_health():
     """
@@ -18,6 +19,7 @@ def test_api_health():
     data = response.json()
     assert data["status"] == "ok"
     assert data["message"] == "API server is healthy."
+
 
 def test_api_uptime():
     """
@@ -38,6 +40,7 @@ def test_api_uptime():
     response_later = client.get("/uptime")
     uptime_later = response_later.json()["uptime_seconds"]
     assert uptime_later > uptime
+
 
 @pytest.mark.parametrize(
     "endpoint,expected_status,expected_key",
