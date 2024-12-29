@@ -2,6 +2,14 @@
 
 This is the backend service for the **Plouf** project, which manages and handles swimming pool data. The backend is built using Python, Pydantic, and MongoDB. This README will guide you through the setup, running, and testing of the project.
 
+## 🚀 Backend Features
+
+Currently, the backend provides the following features:
+
+- **CRUD Operations**: Create, read, update, and delete operations for pools
+- **Logging**: Record pool logs for each pool, including pH levels, chlorine concentrations, and cleaning dates, and view logs for each pool
+- **Health Check**: A health check endpoint to verify the status of the backend and database.
+
 ## 🛠️ Backend Structure
 
 The backend structure is organized as follows:
@@ -53,6 +61,28 @@ Before running the backend, ensure you have the following installed:
      ```
    - Or connect to a MongoDB cluster if you use MongoDB Atlas.
 
+## 🐳 Build Docker Image
+
+This backend is dockerized and can be run using Docker Compose. To build the Docker image, run the following command:
+
+```bash
+docker image build -t plouf-backend .
+```
+
+Tag the image with the name `plouf-backend:latest`:
+
+```bash
+docker tag plouf-backend plouf-backend:latest
+```
+
+Push the image to a container registry if needed:
+
+```bash
+docker push plouf-backend:latest
+```
+
+When running the whole application in Docker Compose, the backend is built automatically. You can skip this step. Just make sure not to have a previously built image with the same name.
+
 ## 🚀 Running the Backend
 
 To run the backend locally, use the following command:
@@ -61,7 +91,24 @@ To run the backend locally, use the following command:
 poetry run python -m app.main
 ```
 
-This will start the backend server. By default, the application will listen for requests on the specified port (check your `main.py` for configuration).
+This application requires a certain environment configuration to run. You can create a `.env` file in the root directory of the backend with the following content (a `.env.example` file is provided for reference):
+
+```plaintext
+MONGO_ADDRESS="localhost:27017"
+MONGO_DATABASE="pool_database"
+MONGO_COLLECTION="pool_collection"
+MONGO_user="user"
+MONGO_password="password"
+
+BACKEND_ADDRESS="0.0.0.0"
+BACKEND_PORT=8000
+```
+
+When running the whole application in Docker Compose, the environnement is not set anymore in the `.env` file but in the `docker-compose.yml` file. Be sure to set the environnement variables in the `backend` service and delete the `.env` file.
+
+This will start the backend server. By default, the application will listen for requests on the specified port (check your `.env` file for configuration).
+
+The backend should be set to run on `0.0.0.0:8000` to be accessible from the frontend. Since there's a port mapping on the local machine, the backend will be accessible at `http://localhost:8000`.
 
 ## 🧪 Running Tests
 
@@ -97,3 +144,7 @@ This will run all the unit and integration tests in the `tests/` directory.
   ```bash
   poetry run uvicorn app.main:app --reload
   ```
+
+## 📚 API Documentation
+
+The API documentation is available at `http://localhost:8000/docs` or `http://127.0.0.1:8000/redoc` when the backend is running. You can use the Swagger UI to interact with the API endpoints.

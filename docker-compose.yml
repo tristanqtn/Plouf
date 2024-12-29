@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   mongodb:
     image: mongo:latest
@@ -9,6 +11,24 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: plouf_backend
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_ADDRESS: mongodb:27017
+      MONGO_DATABASE: pool_database
+      MONGO_COLLECTION: pool_collection
+      MONGO_USER: user
+      MONGO_PASSWORD: password
+      BACKEND_ADDRESS: 0.0.0.0
+      BACKEND_PORT: 8000
+    depends_on:
+      - mongodb
 
 volumes:
   mongodb_data:

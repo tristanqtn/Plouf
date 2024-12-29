@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     # Get the port from the environment variable
     PORT = int(os.getenv("BACKEND_PORT", 8000))
-    HOST = os.getenv("BACKEND_ADDRESS", "127.0.0.1")
+    HOST = os.getenv("BACKEND_ADDRESS", "0.0.0.0")
 
     print(f"Starting the server at {HOST}:{PORT}")
 

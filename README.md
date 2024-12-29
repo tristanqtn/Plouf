@@ -36,7 +36,7 @@ Access the frontend at http://localhost:3000 and the API at http://localhost:800
 
 ## 📚 Documentation
 
-For more detailed information on setting up and using Plouf, please refer to the Wiki or the docs/ directory within this repository.
+For more detailed information on setting up and using Plouf, please refer to each module documentation. Each component of the application is documented in detail, including installation instructions, API endpoints, and frontend components.
 
 ## 🤝 Contributing
 
@@ -44,4 +44,4 @@ We welcome contributions from the community! Please see CONTRIBUTING.md for guid
 
 ## 📝 License
 
-Plouf is licensed under the MIT License. See LICENSE for more details.
+Plouf is licensed under the MIT License. See [LICENSE](./LICENSE) for more details.
