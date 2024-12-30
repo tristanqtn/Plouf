@@ -17,7 +17,7 @@ async def root():
     """
     Plouf API home endpoint.
     """
-    return {"message": "Welcome to the FastAPI application!"}
+    return {"message": "Welcome to the Plouf API ! 🏊‍♂️"}
 
 
 if __name__ == "__main__":

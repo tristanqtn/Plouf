@@ -96,7 +96,6 @@ def retrieve_pool(pool_id: str) -> Optional[Pool]:
     Retrieves a specific pool by ID.
     """
     pool_data = pools_collection.find_one({"_id": ObjectId(pool_id)})
-    print(pool_data)
     if pool_data:
         return parse_pool_data(pool_data)
     return None
@@ -179,7 +178,7 @@ def update_pool_log_by_id(pool_id: str, log_id: str, updated_log: dict) -> bool:
     Updates a specific maintenance log entry by ID.
     """
     result = pools_collection.update_one(
-        {"_id": ObjectId(pool_id), "logbook.id": log_id},
+        {"_id": ObjectId(pool_id), "logbook.id": uuid.UUID(log_id)},
         {"$set": {"logbook.$": updated_log}},
     )
     return result.modified_count > 0
@@ -190,7 +189,7 @@ def delete_pool_log_by_id(pool_id: str, log_id: str) -> bool:
     Deletes a specific maintenance log entry by ID.
     """
     result = pools_collection.update_one(
-        {"_id": ObjectId(pool_id)}, {"$pull": {"logbook": {"id": log_id}}}
+        {"_id": ObjectId(pool_id)}, {"$pull": {"logbook": {"id": uuid.UUID(log_id)}}}
     )
     return result.modified_count > 0
 

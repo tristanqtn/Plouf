@@ -1,5 +1,6 @@
 import unittest
 
+from uuid import uuid4
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
@@ -193,9 +194,9 @@ class TestMongoDBOperations(unittest.TestCase):
         """
         pool = Pool(owner_name="Edward", length=10, width=4, depth=2.5, type="salt")
         pool_id = create_pool(pool)
-
+        log_id = uuid4()
         log_entry = {
-            "id": "log999",
+            "id": log_id,
             "date": "2024-01-03",
             "pH_level": 7.6,
             "chlorine_level": 1.8,
@@ -204,13 +205,13 @@ class TestMongoDBOperations(unittest.TestCase):
         insert_pool_log(pool_id, log_entry)
 
         updated_log = {
-            "id": "log999",
+            "id": log_id,
             "date": "2024-01-03",
             "pH_level": 7.2,
             "chlorine_level": 2.0,
             "notes": "Updated maintenance log",
         }
-        update_result = update_pool_log_by_id(pool_id, "log999", updated_log)
+        update_result = update_pool_log_by_id(pool_id, str(log_id), updated_log)
         self.assertTrue(update_result)
 
         logs = retrieve_pool_logs(pool_id)
@@ -223,9 +224,9 @@ class TestMongoDBOperations(unittest.TestCase):
         """
         pool = Pool(owner_name="Fiona", length=7, width=3.5, depth=2, type="chlorine")
         pool_id = create_pool(pool)
-
+        log_id = uuid4()
         log_entry = {
-            "id": "log456",
+            "id": log_id,
             "date": "2024-01-04",
             "pH_level": 7.8,
             "chlorine_level": 1.5,
@@ -233,12 +234,8 @@ class TestMongoDBOperations(unittest.TestCase):
         }
         insert_pool_log(pool_id, log_entry)
 
-        delete_result = delete_pool_log_by_id(pool_id, "log456")
+        delete_result = delete_pool_log_by_id(pool_id, str(log_id))
         self.assertTrue(delete_result)
 
         logs = retrieve_pool_logs(pool_id)
         self.assertEqual(len(logs), 0)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -1,4 +1,5 @@
 # Description: Pool routes for supporting CRUD operations.
+import uuid  # type: ignore
 
 from fastapi import APIRouter  # type: ignore
 from app.Pools import Pool, PoolLog
@@ -10,13 +11,15 @@ from app.Mongo import (
     delete_pool,
     delete_all_pools,
     retrieve_pool_log_by_id,
+    delete_pool_logs,
+    delete_pool_log_by_id,
 )
 
 pool_router = APIRouter()
 
 
 @pool_router.post(
-    "/new",
+    "/",
     summary="Register a new pool",
     response_description="Pool creation status.",
 )
@@ -45,8 +48,8 @@ async def create_new_pool(pool_data: dict):
 
 @pool_router.get(
     "/all",
-    summary="API Uptime",
-    response_description="API server uptime in seconds.",
+    summary="Retrieve all pools",
+    response_description="Table of pools.",
 )
 async def get_all_pools():
     """
@@ -213,6 +216,28 @@ async def get_all_pool_logs(pool_id: str):
         return {"status": "error", "message": f"Failed to retrieve logs: {str(e)}"}
 
 
+@pool_router.delete(
+    "/{pool_id}/log/all",
+    summary="Delete all maintenance logs for a pool",
+    response_description="Deletion status.",
+)
+async def delete_all_pool_log_(pool_id: str):
+    """
+    Delete all maintenance log entries for a pool.
+
+    Args:
+    - `pool_id`: ID of the pool to retrieve the log from.
+
+    Returns:
+    - `status`: Status of the operation.
+    """
+    try:
+        delete_pool_logs(pool_id)
+        return {"status": "ok", "message": "All logs deleted successfully."}
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to delete logs: {str(e)}"}
+
+
 @pool_router.get(
     "/{pool_id}/log/{log_id}",
     summary="Retrieve a specific maintenance log",
@@ -236,3 +261,63 @@ async def get_pool_log_by_id(pool_id: str, log_id: str):
         return {"status": "ok", "log": log}
     except Exception as e:
         return {"status": "error", "message": f"Failed to retrieve log: {str(e)}"}
+
+
+@pool_router.put(
+    "/{pool_id}/log/{log_id}",
+    summary="Update a specific maintenance log",
+    response_description="Update status.",
+)
+async def update_pool_log(pool_id: str, log_id: str, log_data: dict):
+    """
+    Update a specific maintenance log entry for a pool.
+
+    Args:
+    - `pool_id`: ID of the pool to retrieve the log from.
+    - `log_id`: ID of the log entry to be update.
+
+    Returns:
+    - Update success status.
+    """
+    try:
+        pool = retrieve_pool(pool_id)
+        if not pool:
+            return {"status": "error", "message": "Pool not found."}
+        log = PoolLog(**log_data)
+        log.id = uuid.UUID(log_id)
+
+        for i, log_entry in enumerate(pool.logbook):
+            if str(log_entry.id) == str(log_id):
+                pool.logbook[i] = log
+                break
+        updated = update_pool(pool_id, pool.dict())
+        if not updated:
+            return {"status": "error", "message": "Failed to update maintenance."}
+        return {"status": "ok", "message": "Maintenance updated successfully."}
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to update maintenance: {str(e)}"}
+
+
+@pool_router.delete(
+    "/{pool_id}/log/{log_id}",
+    summary="Delete a specific maintenance log",
+    response_description="Deletion status.",
+)
+async def delete_pool_log_by_id_(pool_id: str, log_id: str):
+    """
+    Delete a specific maintenance log entry for a pool.
+
+    Args:
+    - `pool_id`: ID of the pool to retrieve the log from.
+    - `log_id`: ID of the log entry to be deleted.
+
+    Returns:
+    - `status`: Status of the operation.
+    """
+    try:
+        deleted = delete_pool_log_by_id(pool_id, log_id)
+        if not deleted:
+            return {"status": "error", "message": "Log not found."}
+        return {"status": "ok", "message": "Log deleted successfully."}
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to delete log: {str(e)}"}
