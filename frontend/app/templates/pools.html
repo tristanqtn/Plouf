@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pools</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>All your Pools</h1>
+    <!-- Embed the Plotly graph -->
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Owner Name</th>
+            <th>Length</th>
+            <th>Width</th>
+            <th>Depth</th>
+            <th>Type</th>
+            <th>Water Volume</th>
+            <th>Next Maintenance</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pool in data.pools %}
+          <tr>
+            <td>{{ pool.owner_name }}</td>
+            <td>{{ pool.length }}</td>
+            <td>{{ pool.width }}</td>
+            <td>{{ pool.depth }}</td>
+            <td>{{ pool.type }}</td>
+            <td>{{ pool.water_volume }}</td>
+            <td>{{ pool.next_maintenance }}</td>
+            <td>
+              <button class="button" onclick="showDetails('{{ pool.id }}')">
+                View Details
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br />
+      <button class="button" onclick="window.location.href='/'">
+        Return to Home Page
+      </button>
+    </div>
+    <script>
+      function showDetails(poolId) {
+        // Implement the logic to show pool details
+        alert("Showing details for pool ID: " + poolId);
+      }
+    </script>
+  </body>
+</html>
