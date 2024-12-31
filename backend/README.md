@@ -148,3 +148,19 @@ This will run all the unit and integration tests in the `tests/` directory.
 ## 📚 API Documentation
 
 The API documentation is available at `http://localhost:8000/docs` or `http://127.0.0.1:8000/redoc` when the backend is running. You can use the Swagger UI to interact with the API endpoints.
+
+## Note
+
+This application is not very secured, I know it's funny for a security engineer to develop an unsafe application. But I wanted to focus on the backend and the frontend, and I didn't want to spend too much time on the security part.
+
+This why you shouldn't expose this application on the web. This is meants to be run locally in a private network. You clearly don't want to expose your pool pH level to the world ;) .
+
+Here are some basic security measures that could be implemented:
+
+- Use HTTPS
+- Use a secret key for the JWT token to restrict access to the API
+- Use a rate limiter to prevent brute force attacks
+- Use a CORS policy to restrict access to the API
+- Use prepared statements to prevent SQL injection
+
+Feel free to contribute to the project and add these security measures if you want to!

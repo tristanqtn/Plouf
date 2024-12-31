@@ -1,15 +1,17 @@
-from flask import Flask, render_template
-import plotly.graph_objs as go
-import plotly.io as pio
-import numpy as np
 import requests
 import os
+
 from dotenv import load_dotenv
+from flask import Flask, render_template
 
 load_dotenv()
 
 BACKEND_ADDRESS = os.getenv('BACKEND_ADDRESS')
 BACKEND_PORT = os.getenv('BACKEND_PORT')
+
+# Get the port from the environment variable
+PORT = int(os.getenv("FRONTEND_PORT", 3000))
+HOST = os.getenv("FRONTEND_ADDRESS", "0.0.0.0")
 
 FRONTEND_VERSION = os.getenv('FRONTEND_VERSION', '1.0.0')
 
@@ -26,5 +28,5 @@ def pools():
 
 if __name__ == '__main__':
     print(f"Backend version: {FRONTEND_VERSION}")
-    app.run(debug=True)
+    app.run(debug=True, host=HOST, port=PORT)
 
