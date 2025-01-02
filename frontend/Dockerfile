@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Set working directory
-WORKDIR /backend
+WORKDIR /frontend
 
 # Copy project files
 COPY pyproject.toml poetry.lock ./
@@ -28,7 +28,7 @@ RUN poetry config virtualenvs.create false \
 COPY ./app ./app
 
 # Expose application port
-EXPOSE 8000
+EXPOSE 3000
 
 # Define default command
 CMD ["poetry", "run", "python", "-m", "app.main"]
