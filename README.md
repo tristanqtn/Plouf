@@ -46,7 +46,7 @@ For more detailed information on setting up and using Plouf, please refer to eac
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Please see CONTRIBUTING.md for guidelines on how to get started.
+We welcome contributions from the community! Please refer to the [CONTRIBUTING.md](./CONTRIBUTING.md) file for more information on how to get started.
 
 ## 📝 License
 
