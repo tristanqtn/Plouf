@@ -83,6 +83,14 @@ docker push plouf-backend:latest
 
 When running the whole application in Docker Compose, the backend is built automatically. You can skip this step. Just make sure not to have a previously built image with the same name.
 
+> **IMPORTANT**: The backend Docker image requires the `poetry.lock` file to be present in the Docker build context. Since this file is not committed to the repository, you need to need to generate it locally before building the Docker image. To do this, run the following command:
+
+```bash
+poetry lock
+```
+
+If you perform a `poetry install` the lock file will be generated automatically.
+
 ## 🚀 Running the Backend
 
 To run the backend locally, use the following command:

@@ -2,6 +2,33 @@
 
 This is the frontend service of Plouf. It is a Flask application that allows users to interact with the Plouf backend.
 
+## 🚀 Frontend Features
+
+Currently, the frontend provides the following features:
+
+- **View Pools**: View a list of all pools in the database
+- **Add Pool**: Add a new pool to the database
+- **Update Pool**: Update an existing pool in the database
+- **Delete Pool**: Delete an existing pool from the database
+- **Pool Log Management**: View, add, and delete logs for each pool
+- **Pool Log Visualization**: Visualize logs for each pool using charts
+
+## 🛠️ Frontend Structure
+
+The frontend structure is organized as follows:
+
+- **`app/`**: The main application code.
+
+  - **`main.py`**: Entry point for the application, starts the server and handles routing.
+  - **`routes/`**: Contains the routes for the frontend application.
+    - **`pools.py`**: Contains the routes for managing pools.
+    - **`logs.py`**: Contains the routes for managing pool logs.
+  - **`templates/`**: Contains the HTML templates for the frontend application.
+    - **`home.html`**: Home page for the frontend application.
+    - **`pools/`**: Contains the templates for managing pools.
+    - **`logs/`**: Contains the templates for managing pool logs.
+  - **`static/`**: Contains the static files (CSS, JS, images) for the frontend application.
+
 ## 📝 Requirements
 
 Before running the frontend, ensure you have the following installed:
@@ -34,6 +61,36 @@ Before running the frontend, ensure you have the following installed:
 4. **Make sure you have Plouf backend running locally**
    - If you don't have the backend running locally, follow the instructions in the backend [README](../backend/README.md) to run the backend.
 
+## 🐳 Build Docker Image
+
+This backend is dockerized and can be run using Docker Compose. To build the Docker image, run the following command:
+
+```bash
+docker image build -t plouf-frontend .
+```
+
+Tag the image with the name `plouf-frontend:latest`:
+
+```bash
+docker tag plouf-frontend plouf-frontend:latest
+```
+
+Push the image to a container registry if needed:
+
+```bash
+docker push plouf-frontend:latest
+```
+
+When running the whole application in Docker Compose, the frontend is built automatically. You can skip this step. Just make sure not to have a previously built image with the same name.
+
+> **IMPORTANT**: The frontend Docker image requires the `poetry.lock` file to be present in the Docker build context. Since this file is not committed to the repository, you need to need to generate it locally before building the Docker image. To do this, run the following command:
+
+```bash
+poetry lock
+```
+
+If you perform a `poetry install` the lock file will be generated automatically.
+
 ## 🚀 Running the Frontend
 
 To run the backend locally, use the following command:
@@ -41,6 +98,24 @@ To run the backend locally, use the following command:
 ```bash
 poetry run python -m app.main
 ```
+
+This application requires the Plouf backend to be running. Make sure the backend is running before starting the frontend. It also needs some environment variables to be set. You can set them in a `.env` file in the root directory of the frontend. Here is an example of the `.env` file (a `.env.example` file is provided for reference):
+
+```plaintext
+BACKEND_ADDRESS="127.0.0.1"
+BACKEND_PORT=8000
+
+FRONTEND_ADDRESS="127.0.0.1"
+FRONTEND_PORT=3000
+
+FRONTEND_VERSION="0.1.0"
+```
+
+When running the whole application in Docker Compose, the environnement is not set anymore in the `.env` file but in the `docker-compose.yml` file. Be sure to set the environnement variables in the `frontend` service and delete the `.env` file.
+
+This will start the frontend server. By default, the application will listen for requests on the specified port (check your `.env` file for configuration).
+
+The frontend should be set to run on `0.0.0.0:3000` to be accessible. Since there's a port mapping on the local machine, the backend will be accessible at `http://localhost:3000`.
 
 ## 🛠️ Additional Commands
 

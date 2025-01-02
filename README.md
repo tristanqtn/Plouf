@@ -13,7 +13,7 @@ Plouf is an open-source, self-hosted application designed to simplify the life o
 ## 🛠 Tech Stack
 
 Backend: Python (FastAPI)
-Frontend: React with Vite or Next.js
+Frontend: Flask
 Database: MongoDB
 Containerization: Docker and Docker Compose for easy deployment and orchestration
 
@@ -26,10 +26,16 @@ git clone https://github.com/tristanqtn/Plouf.git
 cd Plouf
 ```
 
-Run Docker Compose:
+Build Docker images (this may take a few minutes, but it ensures that all dependencies are installed correctly):
 
 ```bash
-docker-compose up --build
+docker compose build --no-cache
+```
+
+Start the application:
+
+```bash
+docker compose up
 ```
 
 Access the frontend at http://localhost:3000 and the API at http://localhost:8000.
