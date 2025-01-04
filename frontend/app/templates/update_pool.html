@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pools</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+      form {
+        display: grid;
+        gap: 15px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      form div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      form label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      form input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      form button {
+        align-self: center;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul
+        style="
+          list-style-type: none;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        "
+      >
+        <li>
+          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
+        </li>
+        <li>
+          <a href="/pools" style="text-decoration: none; color: #007bff"
+            >Pools</a
+          >
+        </li>
+        <li>
+          <a href="/health" style="text-decoration: none; color: #007bff"
+            >Health</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h2>Update Pool</h2>
+      <form id="updatePoolForm">
+        <div>
+          <label for="update_owner_name">Owner Name:</label>
+          <input
+            type="text"
+            id="update_owner_name"
+            name="owner_name"
+            value="{{ data.owner_name }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="update_length">Length (m):</label>
+          <input
+            type="number"
+            id="update_length"
+            name="length"
+            step="0.1"
+            value="{{ data.length }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="update_width">Width (m):</label>
+          <input
+            type="number"
+            id="update_width"
+            name="width"
+            step="0.1"
+            value="{{ data.width }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="update_depth">Depth (m):</label>
+          <input
+            type="number"
+            id="update_depth"
+            name="depth"
+            step="0.1"
+            value="{{ data.depth }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="update_type">Type:</label>
+          <input
+            type="text"
+            id="update_type"
+            name="type"
+            value="{{ data.type }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="update_notes">Notes:</label>
+          <input
+            type="text"
+            id="update_notes"
+            name="notes"
+            value="{{ data.notes }}"
+          />
+        </div>
+        <div>
+          <label for="update_next_maintenance">Next Maintenance:</label>
+          <input
+            type="date"
+            id="update_next_maintenance"
+            name="next_maintenance"
+            value="{{ data.next_maintenance }}"
+          />
+        </div>
+        <button type="submit" class="button">Update Pool</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("updatePoolForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const ownerName = document.getElementById("update_owner_name").value;
+          const length = parseFloat(
+            document.getElementById("update_length").value
+          );
+          const width = parseFloat(
+            document.getElementById("update_width").value
+          );
+          const depth = parseFloat(
+            document.getElementById("update_depth").value
+          );
+          const type = document.getElementById("update_type").value;
+          const notes = document.getElementById("update_notes").value;
+          const nextMaintenance = document.getElementById(
+            "update_next_maintenance"
+          ).value;
+
+          const waterVolume = length * width * depth;
+
+          const poolData = {
+            owner_name: ownerName,
+            length: length,
+            width: width,
+            depth: depth,
+            type: type,
+            notes: notes,
+            water_volume: waterVolume,
+            next_maintenance: nextMaintenance,
+          };
+
+          fetch("/update-pool/" + "{{pool_id}}", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(poolData),
+          })
+            .then((response) => {
+              console.log(response);
+              if (!response.ok) {
+                throw new Error("Failed to update pool.");
+              }
+              return response;
+            })
+            .then((response) => response.json())
+            .then((data) => {
+              alert("Pool updated successfully!");
+              window.location.href = "/pool/" + "{{pool_id}}";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Failed to update pool.");
+            });
+        });
+    </script>
+  </body>
+</html>

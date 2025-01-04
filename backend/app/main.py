@@ -1,10 +1,12 @@
+import os
+from dotenv import load_dotenv
+
 from fastapi import FastAPI  # type: ignore
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+
 from app.routes.health.mongo import mongo_health_router
 from app.routes.health.api import api_health_router
 from app.routes.pool.router import pool_router
-
-import os
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -15,6 +17,28 @@ HOST = os.getenv("BACKEND_ADDRESS", "0.0.0.0")
 BACKEND_VERSION = os.getenv("BACKEND_VERSION", "1.0.0")
 
 app = FastAPI()
+
+# Configure CORS
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
+# add Access-Control-Allow-Origin header to the response
+@app.middleware("http")
+async def add_cors_header(request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
 
 # Include the router
 app.include_router(pool_router, prefix="/pool", tags=["Pool"])

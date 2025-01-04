@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Information</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .section {
+        margin-bottom: 20px;
+      }
+      .section h2 {
+        color: #555;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+      }
+      .section p {
+        margin: 5px 0;
+      }
+      .status-ok {
+        color: green;
+      }
+      .status-fail {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul
+        style="
+          list-style-type: none;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        "
+      >
+        <li>
+          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
+        </li>
+        <li>
+          <a href="/pools" style="text-decoration: none; color: #007bff"
+            >Pools</a
+          >
+        </li>
+        <li>
+          <a href="/health" style="text-decoration: none; color: #007bff"
+            >Health</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Health Information</h1>
+
+      <div class="section">
+        <h2>API Status</h2>
+        <p>Status: <span class="status-ok">{{ api.status }}</span></p>
+        <p>Uptime: {{ api.uptime_seconds }} seconds</p>
+      </div>
+
+      <div class="section">
+        <h2>MongoDB Status</h2>
+        <p>
+          Overall Status:
+          <span class="status-ok">{{ mongo.overall_status }}</span>
+        </p>
+        <p>
+          Health Status:
+          <span class="status-ok">{{ mongo.health.status }}</span>
+        </p>
+        <p>Health Message: {{ mongo.health.message }}</p>
+        <p>Uptime: {{ mongo.uptime.uptime_seconds }} seconds</p>
+      </div>
+
+      <div class="section">
+        <h2>Storage Stats</h2>
+        <p>Storage Engine: {{ mongo.storage_stats.storage_engine }}</p>
+        <p>Memory Resident: {{ mongo.storage_stats.memory.resident_MB }} MB</p>
+        <p>Memory Virtual: {{ mongo.storage_stats.memory.virtual_MB }} MB</p>
+        <p>Memory Mapped: {{ mongo.storage_stats.memory.mapped_MB }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Connection Stats</h2>
+        <p>
+          Current Connections: {{ mongo.connection_stats.connections.current }}
+        </p>
+        <p>
+          Available Connections: {{ mongo.connection_stats.connections.available
+          }}
+        </p>
+        <p>
+          Total Created Connections: {{
+          mongo.connection_stats.connections.total_created }}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

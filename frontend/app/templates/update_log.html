@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pool Details</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .pool-info,
+      .logbook {
+        margin-bottom: 20px;
+      }
+      .logbook-entry {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+      .logbook-entry:last-child {
+        border-bottom: none;
+      }
+      .logbook-entry h3 {
+        margin: 0;
+        color: #555;
+      }
+      .logbook-entry p {
+        margin: 5px 0;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul
+        style="
+          list-style-type: none;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        "
+      >
+        <li>
+          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
+        </li>
+        <li>
+          <a href="/pools" style="text-decoration: none; color: #007bff"
+            >Pools</a
+          >
+        </li>
+        <li>
+          <a href="/health" style="text-decoration: none; color: #007bff"
+            >Health</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <style>
+      form {
+        display: grid;
+        gap: 15px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      form div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      form label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      form input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      form button {
+        align-self: center;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #218838;
+      }
+    </style>
+    <br />
+    <div class="container">
+      <h2>Add Pool Log</h2>
+      <form id="addPoolLogForm">
+        <div>
+          <label for="pH_level">pH Level:</label>
+          <input
+            type="number"
+            id="pH_level"
+            name="pH_level"
+            step="0.1"
+            value="{{ data.pH_level }}"
+          />
+        </div>
+        <div>
+          <label for="chlorine_level">Chlorine Level:</label>
+          <input
+            type="number"
+            id="chlorine_level"
+            name="chlorine_level"
+            step="0.1"
+            value="{{ data.chlorine_level }}"
+            required
+          />
+        </div>
+        <div>
+          <label for="notes">Notes:</label>
+          <input type="text" id="notes" name="notes" value="{{data.notes}}" />
+        </div>
+        <div>
+          <label for="date">Maintenance Date:</label>
+          <input type="date" id="date" name="date" value="{{data.date}}" />
+        </div>
+        <button type="submit" class="button">Update Log</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("addPoolLogForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const pH_level = parseFloat(
+            document.getElementById("pH_level").value
+          );
+          const chlorine_level = parseFloat(
+            document.getElementById("chlorine_level").value
+          );
+          const notes = document.getElementById("notes").value;
+          const date = document.getElementById("date").value;
+
+          const poolLogData = {
+            pH_level: pH_level,
+            chlorine_level: chlorine_level,
+            notes: notes,
+            date: date,
+          };
+          fetch("/update-log/" + "{{pool_id}}" + "/" + "{{log_id}}", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(poolLogData),
+          })
+            .then((response) => {
+              console.log(response);
+              if (!response.ok) {
+                throw new Error("Failed to update pool.");
+              }
+              return response;
+            })
+            .then((response) => response.json())
+            .then((data) => {
+              alert("Pool updated successfully!");
+              window.location.href = "/pool/" + "{{pool_id}}";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Failed to update pool.");
+            });
+        });
+    </script>
+  </body>
+</html>

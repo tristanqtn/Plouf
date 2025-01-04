@@ -29,6 +29,8 @@ The frontend structure is organized as follows:
     - **`logs/`**: Contains the templates for managing pool logs.
   - **`static/`**: Contains the static files (CSS, JS, images) for the frontend application.
 
+During development, I encoutered some issues with sending requests from the Flask templates to the backend. This is mainly due to CORS issues. The solution was to create an intermediary API in the frontend that forwards requests to the backend. This way, the frontend can send requests to the intermediary API, which then forwards them to the backend. This is a workaround to avoid CORS issues.
+
 ## 📝 Requirements
 
 Before running the frontend, ensure you have the following installed:
