@@ -32,6 +32,7 @@ Build Docker images (this may take a few minutes, but it ensures that all depend
 docker compose build --no-cache
 ```
 
+dcu
 Start the application:
 
 ```bash
@@ -43,6 +44,9 @@ Access the frontend at http://localhost:3000 and the API at http://localhost:800
 ## 📚 Documentation
 
 For more detailed information on setting up and using Plouf, please refer to each module documentation. Each component of the application is documented in detail, including installation instructions, API endpoints, and frontend components.
+
+- [Backend Documentation](./backend/README.md)
+- [Frontend Documentation](./frontend/README.md)
 
 ## 🤝 Contributing
 

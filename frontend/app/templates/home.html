@@ -3,73 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Plouf</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f8ff;
-        color: #333;
-        text-align: center;
-        padding: 50px;
-      }
-      h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
-      }
-      p {
-        font-size: 1.2em;
-      }
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .button {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-top: 20px;
-        font-size: 1em;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-      .button:hover {
-        background-color: #0056b3;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <title>Plouf - Home</title>
   </head>
   <body>
-    <nav>
-      <ul
-        style="
-          list-style-type: none;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-        "
-      >
-        <li>
-          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
-        </li>
-        <li>
-          <a href="/pools" style="text-decoration: none; color: #007bff"
-            >Pools</a
-          >
-        </li>
-        <li>
-          <a href="/health" style="text-decoration: none; color: #007bff"
-            >Health</a
-          >
-        </li>
-      </ul>
-    </nav>
+    {% include 'navbar.html' %}
 
     <div class="container">
       <h1>Welcome to Plouf!</h1>
       <p>Your one-stop solution for all your needs.</p>
       <a href="/pools" class="button">Get Started</a>
     </div>
+    <br />
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="services">
+        <p class="description">
+          Plouf is a numerical pool log book designed to help you keep track of
+          all your pool-related activities and maintenance tasks. Whether you
+          are a pool owner or a professional pool service provider, Plouf offers
+          a range of features to suit your needs.
+        </p>
+        <p class="usage-title">Usage:</p>
+        <ul class="usage-list">
+          <li>Log Book: Record and monitor pool maintenance activities.</li>
+          <li>
+            Water Quality Tracking: Keep track of water quality parameters.
+          </li>
+          <li>
+            Service Scheduling: Schedule and manage pool service appointments.
+          </li>
+        </ul>
+        <p class="advantages-title">Advantages:</p>
+        <ul class="advantages-list">
+          <li>User-Friendly Interface: Easy to navigate and use.</li>
+          <li>
+            Customizable: Tailor the platform to fit your specific requirements.
+          </li>
+          <li>
+            Secure: Your data is protected with top-notch security measures.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <br />
+    <div class="container">
+      <h2>About the Project</h2>
+      <div class="project-details">
+        <p class="description">
+          This project is developed and maintained by a single individual. The
+          initial goal was to solve a pool log storage issue, which then evolved
+          into an opportunity to build a full-stack application to keep coding
+          skills sharp. This application is designed to be run at home, allowing
+          everyone to access the data easily.
+        </p>
+      </div>
+    </div>
   </body>
+  {% include 'footer.html' %}
 </html>

@@ -11,6 +11,7 @@ import plotly.graph_objs as go # type: ignore
 import os
 import requests
 import socket
+import datetime
 
 load_dotenv()
 
@@ -59,11 +60,13 @@ def home():
 @app.route("/pools")
 def pools():
     response = requests.get(f"{PLOUF_BACKEND_URL}/pool/all")
-    return render_template("pools.html", data=response.json())
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    return render_template("pools.html", data=response.json(), today=today)
 
 
 @app.route("/pool/<pool_id>")
 def pool(pool_id):
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
     response = requests.get(f"{PLOUF_BACKEND_URL}/pool/{pool_id}")
     response = response.json()
     logbook = response["pool"]["logbook"]
@@ -90,7 +93,7 @@ def pool(pool_id):
     graph_html = pio.to_html(fig, full_html=False)
 
     return render_template(
-        "pool_details.html", data=response, pool_id=pool_id, graph_html=graph_html
+        "pool_details.html", data=response, pool_id=pool_id, graph_html=graph_html, today=today
     )
 
 

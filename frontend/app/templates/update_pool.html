@@ -3,115 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pools</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f8ff;
-        color: #333;
-        text-align: center;
-        padding: 50px;
-      }
-      h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .button {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-top: 20px;
-        font-size: 1em;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-      .button:hover {
-        background-color: #0056b3;
-      }
-      form {
-        display: grid;
-        gap: 15px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      form div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      form label {
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-      form input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-      form button {
-        align-self: center;
-        padding: 10px 20px;
-        font-size: 1em;
-        color: #fff;
-        background-color: #28a745;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      form button:hover {
-        background-color: #218838;
-      }
-    </style>
+    <title>Plouf - Update Pool</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
-    <nav>
-      <ul
-        style="
-          list-style-type: none;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-        "
-      >
-        <li>
-          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
-        </li>
-        <li>
-          <a href="/pools" style="text-decoration: none; color: #007bff"
-            >Pools</a
-          >
-        </li>
-        <li>
-          <a href="/health" style="text-decoration: none; color: #007bff"
-            >Health</a
-          >
-        </li>
-      </ul>
-    </nav>
-
+    {% include 'navbar.html' %}
     <div class="container">
       <h2>Update Pool</h2>
       <form id="updatePoolForm">
@@ -132,6 +31,7 @@
             id="update_length"
             name="length"
             step="0.1"
+            min="1"
             value="{{ data.length }}"
             required
           />
@@ -143,6 +43,7 @@
             id="update_width"
             name="width"
             step="0.1"
+            min="1"
             value="{{ data.width }}"
             required
           />
@@ -154,6 +55,7 @@
             id="update_depth"
             name="depth"
             step="0.1"
+            min="0.5"
             value="{{ data.depth }}"
             required
           />
@@ -164,6 +66,7 @@
             type="text"
             id="update_type"
             name="type"
+            placeholder="Indoor, Heated, ..."
             value="{{ data.type }}"
             required
           />
@@ -212,6 +115,12 @@
             "update_next_maintenance"
           ).value;
 
+          const today = new Date().toISOString().split("T")[0];
+          if (nextMaintenance < today) {
+            alert("Next maintenance date must be in the future.");
+            return;
+          }
+
           const waterVolume = length * width * depth;
 
           const poolData = {
@@ -251,4 +160,5 @@
         });
     </script>
   </body>
+  {% include 'footer.html' %}
 </html>

@@ -3,74 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Health Information</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f8ff;
-        margin: 0;
-        padding: 20px;
-      }
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      h1 {
-        text-align: center;
-        color: #333;
-      }
-      .section {
-        margin-bottom: 20px;
-      }
-      .section h2 {
-        color: #555;
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 5px;
-      }
-      .section p {
-        margin: 5px 0;
-      }
-      .status-ok {
-        color: green;
-      }
-      .status-fail {
-        color: red;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <title>Plouf - Health Information</title>
   </head>
   <body>
-    <nav>
-      <ul
-        style="
-          list-style-type: none;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-        "
-      >
-        <li>
-          <a href="/" style="text-decoration: none; color: #007bff">Home</a>
-        </li>
-        <li>
-          <a href="/pools" style="text-decoration: none; color: #007bff"
-            >Pools</a
-          >
-        </li>
-        <li>
-          <a href="/health" style="text-decoration: none; color: #007bff"
-            >Health</a
-          >
-        </li>
-      </ul>
-    </nav>
+    {% include 'navbar.html' %}
 
     <div class="container">
-      <h1>Health Information</h1>
+      <h1>Plouf Health Information</h1>
 
       <div class="section">
         <h2>API Status</h2>
@@ -116,4 +59,5 @@
       </div>
     </div>
   </body>
+  {% include 'footer.html' %}
 </html>

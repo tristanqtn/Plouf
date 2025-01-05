@@ -17,8 +17,9 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: plouf_backend
-    ports:
-      - "8000:8000"
+    #Enable the port 8000 bind for backend debugging or API access
+    #ports:
+    # - "8000:8000"
     environment:
       MONGO_ADDRESS: mongodb:27017
       MONGO_DATABASE: pool_database
