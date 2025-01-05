@@ -26,16 +26,6 @@ git clone https://github.com/tristanqtn/Plouf.git
 cd Plouf
 ```
 
-Make sur the Poetry lock file are up to date in both backend and frontend folder:
-
-```bash
-cd backend
-poetry lock
-
-cd ../frontend
-poetry lock
-```
-
 Build Docker images (this may take a few minutes, but it ensures that all dependencies are installed correctly):
 
 ```bash
