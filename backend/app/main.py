@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 from fastapi import FastAPI  # type: ignore
-from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore
 
 from app.routes.health.mongo import mongo_health_router
 from app.routes.health.api import api_health_router
@@ -31,13 +31,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+
 # add Access-Control-Allow-Origin header to the response
 @app.middleware("http")
 async def add_cors_header(request, call_next):
     response = await call_next(request)
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
-
 
 
 # Include the router
@@ -52,8 +52,8 @@ async def root():
     """
     Plouf API home endpoint.
     """
-    return {"message": "Welcome to Plouf backend ! 🏊‍♂️",
-            "version": BACKEND_VERSION}
+    return {"message": "Welcome to Plouf backend ! 🏊‍♂️", "version": BACKEND_VERSION}
+
 
 if __name__ == "__main__":
     import uvicorn  # type: ignore

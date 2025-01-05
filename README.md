@@ -26,6 +26,16 @@ git clone https://github.com/tristanqtn/Plouf.git
 cd Plouf
 ```
 
+Make sur the Poetry lock file are up to date in both backend and frontend folder:
+
+```bash
+cd backend
+poetry lock
+
+cd ../frontend
+poetry lock
+```
+
 Build Docker images (this may take a few minutes, but it ensures that all dependencies are installed correctly):
 
 ```bash
@@ -39,7 +49,9 @@ Start the application:
 docker compose up
 ```
 
-Access the frontend at http://localhost:3000 and the API at http://localhost:8000.
+Access the frontend at http://localhost:3000 and the API at http://localhost:8000 (disabled by default in docker compose, you can enable to port binding to directly access the API). I strongly recommend you to run this application on a static IP device in your network to avoid IP changes and to be able to access the application from any device in your network.
+
+> **IMPORTANT:** Firewall configuration may be required to allow access to the application from other devices in your network.
 
 ## 📚 Documentation
 

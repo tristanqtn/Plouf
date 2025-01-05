@@ -1,17 +1,16 @@
 from dotenv import load_dotenv
 
-from flask_cors import CORS # type: ignore
+from flask_cors import CORS  # type: ignore
 from flask import Flask, render_template, request, jsonify
+
+import os
+import socket
+import requests
+import datetime
 
 import numpy as np
 import plotly.io as pio  # type: ignore
-import plotly.graph_objs as go # type: ignore
-
-
-import os
-import requests
-import socket
-import datetime
+import plotly.graph_objs as go  # type: ignore
 
 load_dotenv()
 
@@ -33,7 +32,6 @@ def is_ip_address(address):
         return True
     except socket.error:
         return False
-
 
 if is_ip_address(BACKEND_ADDRESS):
     print(f"BACKEND_ADDRESS is an IP address: {BACKEND_ADDRESS}")
@@ -93,7 +91,11 @@ def pool(pool_id):
     graph_html = pio.to_html(fig, full_html=False)
 
     return render_template(
-        "pool_details.html", data=response, pool_id=pool_id, graph_html=graph_html, today=today
+        "pool_details.html",
+        data=response,
+        pool_id=pool_id,
+        graph_html=graph_html,
+        today=today,
     )
 
 
