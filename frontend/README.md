@@ -1,6 +1,6 @@
 # 🌊 Welcome to Plouf Frontend!
 
-This is the frontend service of Plouf. It is a Flask application that allows users to interact with the Plouf backend.
+This is the frontend service of Plouf. It is a Streamlit application that allows users to interact with the Plouf backend.
 
 ## 🚀 Frontend Features
 
@@ -18,18 +18,15 @@ Currently, the frontend provides the following features:
 The frontend structure is organized as follows:
 
 - **`app/`**: The main application code.
+  - **`main.py`**: Entry point for the application, starts the server and UI.
+  - **`config.py`**: Contains the configuration settings for the application.
+  - **`templates/`**: Contains the Streamlit templates.
+    - **`home.py`**: Home page for the frontend application.
+    - **`health.py`**: Health and monitoring page.
+    - **`pools.py`**: Contains the templates for managing pool logs.
+    - **`pools_details.py`**: Contains the templates for managing pool logs.
 
-  - **`main.py`**: Entry point for the application, starts the server and handles routing.
-  - **`routes/`**: Contains the routes for the frontend application.
-    - **`pools.py`**: Contains the routes for managing pools.
-    - **`logs.py`**: Contains the routes for managing pool logs.
-  - **`templates/`**: Contains the HTML templates for the frontend application.
-    - **`home.html`**: Home page for the frontend application.
-    - **`pools/`**: Contains the templates for managing pools.
-    - **`logs/`**: Contains the templates for managing pool logs.
-  - **`static/`**: Contains the static files (CSS, JS, images) for the frontend application.
-
-During development, I encoutered some issues with sending requests from the Flask templates to the backend. This is mainly due to CORS issues. The solution was to create an intermediary API in the frontend that forwards requests to the backend. This way, the frontend can send requests to the intermediary API, which then forwards them to the backend. This is a workaround to avoid CORS issues.
+During development, I encoutered some issues with sending requests from the Streamlit templates to the backend. This is mainly due to CORS issues. The solution was to create an intermediary API in the frontend that forwards requests to the backend. This way, the frontend can send requests to the intermediary API, which then forwards them to the backend. This is a workaround to avoid CORS issues.
 
 ## 📝 Requirements
 
@@ -87,10 +84,10 @@ When running the whole application in Docker Compose, the frontend is built auto
 
 ## 🚀 Running the Frontend
 
-To run the backend locally, use the following command:
+To run the frontend locally, use the following command:
 
 ```bash
-poetry run python -m app.main
+poetry run streamlit run /app/main.py
 ```
 
 This application requires the Plouf backend to be running. Make sure the backend is running before starting the frontend. It also needs some environment variables to be set. You can set them in a `.env` file in the root directory of the frontend. Here is an example of the `.env` file (a `.env.example` file is provided for reference):
@@ -123,10 +120,4 @@ The frontend should be set to run on `0.0.0.0:3000` to be accessible. Since ther
 
   ```bash
   poetry install
-  ```
-
-- To run your application:
-
-  ```bash
-  poetry run python -m app.main
   ```

@@ -15,6 +15,7 @@ def show():
 
         if response.status_code == 200:
             pool_data = response.json()["pool"]
+            # -------------------- POOL DETAILS --------------------
             st.title(f"🏊 Pool {pool_data['id']} - Details")
             col1, col2 = st.columns(2)
             with col1:
@@ -32,7 +33,7 @@ def show():
 
             st.markdown("---")
 
-            # Display logbook as a Plotly Chart
+            # -------------------- SAMPLES GRAPH --------------------
             logbook = sorted(pool_data["logbook"], key=lambda x: x["date"])
             chlorine_data = [log["chlorine_level"] for log in logbook]
             ph_data = [log["pH_level"] for log in logbook]
@@ -59,6 +60,7 @@ def show():
 
             st.plotly_chart(fig)
 
+            # -------------------- POOL LOGS SECTION --------------------
             st.subheader("Recent Logs")
 
             if len(logbook) == 0:
@@ -176,7 +178,7 @@ def show():
 
             st.markdown("---")
 
-            # Form to add a new log to the logbook
+            # -------------------- NEW POOL LOG --------------------
             st.subheader("➕ Add Logbook Entry")
 
             with st.form("add_logbook_form", clear_on_submit=True):
