@@ -22,7 +22,7 @@ COPY pyproject.toml ./
 
 # Install Python dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --without dev --no-interaction --no-ansi
 
 # Copy application source code
 COPY ./app ./app
@@ -31,4 +31,4 @@ COPY ./app ./app
 EXPOSE 3000
 
 # Define default command
-CMD ["poetry", "run", "python", "-m", "app.main"]
+CMD ["poetry", "run", "streamlit", "run", "/frontend/app/main.py", "--server.port=3000"]

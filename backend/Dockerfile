@@ -22,7 +22,7 @@ COPY pyproject.toml ./
 
 # Install Python dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --without dev --no-interaction --no-ansi
 
 # Copy application source code
 COPY ./app ./app
