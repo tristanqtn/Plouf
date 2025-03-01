@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware  # type: ignore
 from app.routes.health.mongo import mongo_health_router
 from app.routes.health.api import api_health_router
 from app.routes.pool.router import pool_router
+from app.routes.stats.router import stats_router
 
 load_dotenv()
 
@@ -45,6 +46,8 @@ app.include_router(pool_router, prefix="/pool", tags=["Pool"])
 
 app.include_router(mongo_health_router, prefix="/health/mongo", tags=["Health"])
 app.include_router(api_health_router, prefix="/health/api", tags=["Health"])
+
+app.include_router(stats_router, prefix="/stats", tags=["Stats"])
 
 
 @app.get("/")
