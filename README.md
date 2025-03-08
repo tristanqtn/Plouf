@@ -34,7 +34,6 @@ Build Docker images (this may take a few minutes, but it ensures that all depend
 docker compose build --no-cache
 ```
 
-dcu
 Start the application:
 
 ```bash
@@ -44,6 +43,12 @@ docker compose up
 Access the frontend at http://localhost:3000 and the API at http://localhost:8000 (disabled by default in docker compose, you can enable to port binding to directly access the API). I strongly recommend you to run this application on a static IP device in your network to avoid IP changes and to be able to access the application from any device in your network.
 
 > **IMPORTANT:** Firewall configuration may be required to allow access to the application from other devices in your network.
+
+Stop the application:
+
+```bash
+docker compose down
+```
 
 ## 📚 Documentation
 

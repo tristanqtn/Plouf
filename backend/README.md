@@ -117,7 +117,13 @@ The backend should be set to run on `0.0.0.0:8000` to be accessible from the fro
 To run the tests and make sure everything works correctly, use:
 
 ```bash
-poetry run pytest
+poetry run pytest --disable-warnings
+```
+
+Debugging tests can be done with:
+
+```bash
+poetry run pytest --pdb -s
 ```
 
 This will run all the unit and integration tests in the `tests/` directory.

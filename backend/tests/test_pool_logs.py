@@ -77,7 +77,6 @@ def test_get_pool_log_by_id(new_pool):
     response = client.get(f"/{pool_id}/log/{log_id}")
 
     assert response.status_code == 200
-    print(response.json())
     log = response.json().get("log", {})
     assert log["date"] == mock_log_data["date"]
     assert log["pH_level"] == mock_log_data["pH_level"]
@@ -101,7 +100,6 @@ def test_log_maintenance_for_non_existent_pool():
     invalid_pool_id = "non-existent-pool-id"
 
     response = client.post(f"/{invalid_pool_id}/log", json=mock_log_data)
-    print(response.json())
     assert response.status_code == 200
     assert response.json().get("status") == "error"
 
