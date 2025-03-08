@@ -2,8 +2,13 @@ import streamlit as st  # type: ignore
 import requests
 from config import PLOUF_BACKEND_URL
 
+
 def show():
     st.title("📋 All Pools")
+    st.write(
+        "Here you can view all the pools in the system, and add new pools to Plouf."
+    )
+    st.markdown("---")
     response = requests.get(f"{PLOUF_BACKEND_URL}/pool/all")
     if response.status_code == 200:
         data = response.json()

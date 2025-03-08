@@ -7,7 +7,7 @@ Thank you for considering contributing to Plouf! I really appreciate your suppor
 1. **Fork the repository**: Click the "Fork" button at the top right of the repository page.
 2. **Clone your fork**: Clone your forked repository to your local machine.
    ```sh
-   git clone https://github.com/your-username/Plouf.git
+   git clone https://github.com/tristanqtn/Plouf.git
    ```
 3. **Create a branch**: Create a new branch for your feature or bugfix.
    ```sh
@@ -67,7 +67,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## Reporting Issues
 
-If you find a bug or have a feature request, please open an issue on the [issue tracker](https://github.com/trist/Plouf/issues).
+If you find a bug or have a feature request, please open an issue on the [issue tracker](https://github.com/tristanqtn/Plouf/issues).
 
 ## Style Guide
 

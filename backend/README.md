@@ -2,6 +2,8 @@
 
 This is the backend service for the **Plouf** project, which manages and handles swimming pool data. The backend is built using Python, Pydantic, and MongoDB. This README will guide you through the setup, running, and testing of the project.
 
+**Current Version**: 1.3.0
+
 ## 🚀 Backend Features
 
 Currently, the backend provides the following features:

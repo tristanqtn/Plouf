@@ -6,6 +6,7 @@ import plotly.graph_objs as go  # type: ignore
 
 from config import PLOUF_BACKEND_URL
 
+
 def show():
     if "selected_pool" not in st.session_state:
         st.warning("No pool selected. Please go to 'Pools' and choose one.")
@@ -16,9 +17,11 @@ def show():
         if response.status_code == 200:
             pool_data = response.json()["pool"]
             # -------------------- POOL DETAILS --------------------
-            st.title(f"🏊 Pool {pool_data['id']} - Details")
+            st.title("🏊 Pool Details")
+            st.markdown("---")
             col1, col2 = st.columns(2)
             with col1:
+                st.write(f"**Pool ID:** {pool_data['id']}")
                 st.write(f"**Owner Name:** {pool_data['owner_name']}")
                 st.write(
                     f"**Dimensions:** {pool_data['length']}m x {pool_data['width']}m x {pool_data['depth']}m"
@@ -28,8 +31,8 @@ def show():
             with col2:
                 st.write(f"**Type:** {pool_data['type']}")
                 st.write(f"**Next Maintenance:** {pool_data['next_maintenance']}")
-            if pool_data["notes"]:
-                st.write(f"**Notes:** {pool_data['notes']}")
+                if pool_data["notes"]:
+                    st.write(f"**Notes:** {pool_data['notes']}")
 
             st.markdown("---")
 
@@ -38,7 +41,7 @@ def show():
             chlorine_data = [log["chlorine_level"] for log in logbook]
             ph_data = [log["pH_level"] for log in logbook]
             dates = [log["date"] for log in logbook]
-
+            st.subheader("📊 Pool Logbook")
             fig = go.Figure()
             fig.add_trace(
                 go.Scatter(
@@ -55,13 +58,14 @@ def show():
             )
             fig.update_xaxes(tickvals=np.arange(len(dates)), ticktext=dates)
             fig.update_layout(
-                title="Pool Logbook", xaxis_title="Time", yaxis_title="Value"
+                title="Chlorine and pH Levels Over Time",
+                xaxis_title="Time",
+                yaxis_title="Value",
             )
-
             st.plotly_chart(fig)
 
             # -------------------- POOL LOGS SECTION --------------------
-            st.subheader("Recent Logs")
+            st.markdown("---")
 
             if len(logbook) == 0:
                 st.write("No logs available.")
@@ -71,7 +75,7 @@ def show():
                     with col1:
                         if log["notes"]:
                             st.write(
-                                f"- **Date:** {log['date']}, **pH Level:** {log['pH_level']}, **Chlorine Level:** {log['chlorine_level']}\n- **Notes:** {log['notes']}"
+                                f"- **Date:** {log['date']}, **pH Level:** {log['pH_level']}, **Chlorine Level:** {log['chlorine_level']}, **Notes:** {log['notes']}"
                             )
                         else:
                             st.write(

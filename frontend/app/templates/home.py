@@ -2,6 +2,7 @@ import streamlit as st  # type: ignore
 import requests
 from config import PLOUF_BACKEND_URL
 
+
 def show():
     st.title("🏊 Plouf Dashboard")
     st.write("Welcome to Plouf! Use the navigation on the left to explore.")
@@ -13,7 +14,7 @@ def show():
     mongo_response = requests.get(f"{PLOUF_BACKEND_URL}/health/mongo/full_health")
 
     # ------------------- DISPLAY BIG STATS -------------------
-    st.subheader("📊 System Overview")
+    st.subheader("📊 System Overview", divider="red")
     col1, col2 = st.columns(2)
 
     with col1:
@@ -30,10 +31,8 @@ def show():
         else:
             st.error("Failed to fetch total logs data.")
 
-    st.markdown("---")
-
     # ------------------- API Health Stats -------------------
-    st.subheader("🩺 System Health Overview")
+    st.subheader("🩺 System Health Overview", divider="red")
 
     col1, col2 = st.columns(2)
 

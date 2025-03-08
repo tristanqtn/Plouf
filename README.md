@@ -2,6 +2,8 @@
 
 Plouf is an open-source, self-hosted application designed to simplify the life of pool owners by offering an intuitive, user-friendly platform for tracking pool maintenance. With Plouf, users can log, review, and manage their pool’s health, ensuring sparkling, clean water all year round.
 
+**Current Version**: 2.0.0
+
 ## 🚀 Features
 
 - User-Friendly Maintenance Logging: Record key details such as pH levels, chlorine concentrations, and cleaning dates.
@@ -47,8 +49,8 @@ Access the frontend at http://localhost:3000 and the API at http://localhost:800
 
 For more detailed information on setting up and using Plouf, please refer to each module documentation. Each component of the application is documented in detail, including installation instructions, API endpoints, and frontend components.
 
-- [Backend Documentation](./backend/README.md)
-- [Frontend Documentation](./frontend/README.md)
+- [Backend Documentation - v1.3.0](./backend/README.md)
+- [Frontend Documentation - v2.1.0](./frontend/README.md)
 
 ## 🤝 Contributing
 

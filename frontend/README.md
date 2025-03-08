@@ -2,6 +2,8 @@
 
 This is the frontend service of Plouf. It is a Streamlit application that allows users to interact with the Plouf backend.
 
+**Current Version**: 2.1.0
+
 ## 🚀 Frontend Features
 
 Currently, the frontend provides the following features:
@@ -87,7 +89,7 @@ When running the whole application in Docker Compose, the frontend is built auto
 To run the frontend locally, use the following command:
 
 ```bash
-poetry run streamlit run /app/main.py
+poetry run streamlit run /app/main.py --server.port=3000
 ```
 
 This application requires the Plouf backend to be running. Make sure the backend is running before starting the frontend. It also needs some environment variables to be set. You can set them in a `.env` file in the root directory of the frontend. Here is an example of the `.env` file (a `.env.example` file is provided for reference):
